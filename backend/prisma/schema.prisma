@@ -1,0 +1,68 @@
+// Prisma Schema für die Vertragsverwaltung
+//
+// Datenbank: SQLite (Entwicklung)
+// Für den Umstieg auf PostgreSQL muss lediglich der "provider" unten auf
+// "postgresql" geändert und die DATABASE_URL in der .env angepasst werden.
+// Da hier ausschließlich Prisma-eigene, DB-agnostische Typen verwendet werden,
+// ist keine weitere Anpassung am Schema notwendig.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Umstellung auf PostgreSQL: provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contract {
+  id                String          @id @default(uuid())
+  name              String // Vertrags-Name
+  category          String // Kategorie
+  provider          String // Anbieter / Verkäufer
+  contractNumber    String? // Offizielle Vertragsnummer
+  startDate         DateTime // Beginn
+  durationMonths    Int? // Laufzeit in Monaten (alternativ: endDate nutzen)
+  endDate           DateTime? // Optionales Vertragsende (für feste Laufzeiten)
+  cancellationDays  Int? // Kündigungsfrist in Tagen
+  amount            Float // Kosten / Betrag
+  paymentInterval   String // Intervall des Vertrages
+  status            String // Aktiv/Inaktiv/Abgelaufen
+  info              String? // Freitext / Notizen
+
+  documents         Document[]
+
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  // Vorbereitet für zukünftige Benutzerverwaltung:
+  // userId         String?
+  // user           User?           @relation(fields: [userId], references: [id])
+
+  @@map("contracts")
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  contractId   String
+  contract     Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  name         String // Dokumenten-Name
+  filePath     String // Dokumenten-Pfad (Speicherort auf Server)
+  fileType     String // Dokumenten-Art, z.B. "pdf"
+
+  createdAt    DateTime @default(now()) // Erstellungsdatum
+
+  @@map("documents")
+}
+
+// Vorbereitet für zukünftige Authentifizierung / Benutzerverwaltung.
+// Aktuell nicht aktiv genutzt, aber Modell bereits vorbereitet.
+// model User {
+//   id           String     @id @default(uuid())
+//   email        String     @unique
+//   passwordHash String
+//   name         String?
+//   contracts    Contract[]
+//   createdAt    DateTime   @default(now())
+// }
