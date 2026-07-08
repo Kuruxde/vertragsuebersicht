@@ -26,7 +26,8 @@ model Contract {
   endDate           DateTime? // Optionales Vertragsende (für feste Laufzeiten)
   cancellationDays  Int? // Kündigungsfrist in Tagen
   amount            Float // Kosten / Betrag
-  paymentInterval   String // Intervall des Vertrages
+  paymentTxt        String // Intervall des Vertrages
+  paymentValue      Int // Intervall in Monat berechnet (keine wochen gibt es zu selten)
   status            String // Aktiv/Inaktiv/Abgelaufen
   info              String? // Freitext / Notizen
 

@@ -130,4 +130,67 @@ Die Architektur ist bewusst so aufgebaut, dass folgende Funktionen später ohne 
 - **"+"-Button** öffnet Dialog zum Anlegen neuer Verträge
 - **Vollständiges CRUD** für Verträge (erstellen, anzeigen, bearbeiten, löschen)
 - **Responsive Design** (Sidebar wird auf mobilen Geräten zum ausklappbaren Menü)
->>>>>>> dd1704f ('base')
+
+
+
+## Dokumentation (4now)
+
+- **Tabelle Hinzufügen** 
+
+1. Datenbank-Ebene
+
+   backend/prisma/schema.prisma
+
+   Neue Tabelle(model) definieren
+   Bei Relationen in der jeweiligen Tabelle ergänzen
+
+   Migration ausführen
+   
+   npx prisma migrate dev --name <TABELLENNAME>
+   Das erzeugt automatisch die Migration und "regeneriert" den Prisma Client.
+
+   backend/prisma/seed.js (optional)
+   Falls du Beispieldaten willst.
+
+2. Backend
+
+   Neue Dateien erstellen:
+   Service,Controller,Router
+
+   Services
+   Reine Prisma-Zugriffe: getAll, getById, create, update, delete.
+   
+   Controller
+   Nimmt Requests entgegen, validiert, ruft den Service auf.
+
+   Router
+   Definiert die REST-Endpunkte.
+
+
+   Dateien bearbeiten:
+      
+      app.js muss der neue Router eingehangen werden.
+
+3. Frontend
+
+   Neue Dateien erstellen:
+   Service, hook(use), 
+
+   frontend/src/services/xService.js 
+   API-Aufrufe via api.js.
+
+   frontend/src/hooks/useX.js 
+   State-Management fürs Laden/Anlegen/Bearbeiten/Löschen.
+
+   -Bei Konstanten:
+      frontend/src/constants/
+   
+   -Bei UI-Komponenten (Tabellen, Dialoge, PopUps):
+      frontend/src/components/
+      UI-Komponenten – Tabelle, Formular-Dialog etc.
+
+   -Bei neuen Seiten, zum Beispiel Sidenav auswahl:
+      frontend/src/pages/ erstellen
+      und
+      frontend/src/App.jsx route ergänzen
+   

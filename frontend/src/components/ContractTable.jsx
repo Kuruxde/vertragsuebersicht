@@ -119,7 +119,7 @@ export default function ContractTable({ contracts, onSearch, onAddClick, onEdit,
                     {currencyFormatter.format(contract.amount)}
                     <Typography component="span" variant="caption" color="text.secondary">
                       {' '}
-                      / {getIntervalLabel(contract.paymentInterval).toLowerCase()}
+                      / {getIntervalLabel(contract.paymentTxt).toLowerCase()}
                     </Typography>
                   </TableCell>
                   <TableCell>{formatDuration(contract)}</TableCell>

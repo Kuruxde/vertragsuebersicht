@@ -69,10 +69,11 @@ async function getDashboardStats() {
     QUARTERLY: 1 / 3,
     YEARLY: 1 / 12,
     ONE_TIME: 0,
+    HALF_YEARLY: 1 / 6,
   };
 
   const totalMonthlyCost = activeContracts.reduce((sum, c) => {
-    const factor = monthlyFactor[c.paymentInterval] ?? 1;
+    const factor = monthlyFactor[c.paymentTxt] ?? 1;
     return sum + c.amount * factor;
   }, 0);
 

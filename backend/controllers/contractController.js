@@ -8,7 +8,14 @@ const contractService = require('../services/contractService');
 // Zahlungsintervall als String gespeichert und hier auf Anwendungsebene
 // validiert (siehe prisma/schema.prisma für Details).
 const VALID_STATUSES = ['ACTIVE', 'CANCELLED', 'EXPIRED'];
-const VALID_PAYMENT_INTERVALS = ['MONTHLY', 'QUARTERLY', 'YEARLY', 'ONE_TIME'];
+const VALID_PAYMENT_INTERVALS = ['MONTHLY', 'QUARTERLY', 'YEARLY', 'ONE_TIME', 'HALF_YEARLY'];
+const PAYMENT_MAPPING = {
+  "MONTHLY": 1,
+  "QUARTERLY": 3,
+  "YEARLY": 12,
+  "ONE_TIME": 0,
+  "HALF_YEARLY": 6 
+}
  
 // GET /api/contracts
 async function getAllContracts(req, res, next) {
@@ -115,6 +122,8 @@ function normalizeContractPayload(body) {
  
   if (payload.amount !== undefined) payload.amount = parseFloat(payload.amount);
  
+  if (payload.paymentTxt !== undefined) payload.paymentValue = PAYMENT_MAPPING[payload.paymentTxt] ?? 0;
+
   // Felder, die nicht direkt in der DB liegen, entfernen (z.B. verschachtelte documents)
   delete payload.documents;
   delete payload.id;
@@ -135,7 +144,7 @@ function validateEnumFields(payload) {
   }
   if (
     payload.paymentInterval !== undefined &&
-    !VALID_PAYMENT_INTERVALS.includes(payload.paymentInterval)
+    !VALID_PAYMENT_INTERVALS.includes(payload.paymentTxt)
   ) {
     return `Ungültiges Zahlungsintervall. Erlaubt: ${VALID_PAYMENT_INTERVALS.join(', ')}`;
   }

@@ -9,10 +9,11 @@ export const STATUS_OPTIONS = [
 ];
 
 export const PAYMENT_INTERVAL_OPTIONS = [
-  { value: 'MONTHLY', label: 'Monatlich' },
-  { value: 'QUARTERLY', label: 'Quartalsweise' },
-  { value: 'YEARLY', label: 'Jährlich' },
-  { value: 'ONE_TIME', label: 'Einmalig' },
+  { value: 'MONTHLY', label: 'Monatlich' , realValue: 1},
+  { value: 'QUARTERLY', label: 'Quartalsweise', realValue: 3},
+  { value: 'YEARLY', label: 'Jährlich', realValue: 12 },
+  { value: 'ONE_TIME', label: 'Einmalig', realValue: 0 },
+  { value: 'HALF_YEARLY', label: 'Halbjährig', realValue: 6},
 ];
 
 export const CATEGORY_OPTIONS = [
@@ -32,4 +33,8 @@ export function getStatusMeta(value) {
 
 export function getIntervalLabel(value) {
   return PAYMENT_INTERVAL_OPTIONS.find((i) => i.value === value)?.label || value;
+}
+
+export function getIntervalRealValue(value) {
+  return PAYMENT_INTERVAL_OPTIONS.find((x) => x.value === value)?.realValue || 0;
 }

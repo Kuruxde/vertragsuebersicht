@@ -24,7 +24,7 @@ const emptyForm = {
   durationMonths: '',
   cancellationDays: '',
   amount: '',
-  paymentInterval: 'MONTHLY',
+  paymentTxt: 'MONTHLY',
   status: 'ACTIVE',
   info: '',
 };
@@ -171,8 +171,8 @@ export default function ContractFormDialog({ open, onClose, onSubmit, initialDat
               select
               label="Zahlungsintervall"
               fullWidth
-              value={form.paymentInterval}
-              onChange={handleChange('paymentInterval')}
+              value={form.paymentTxt}
+              onChange={handleChange('paymentTxt')}
             >
               {PAYMENT_INTERVAL_OPTIONS.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>

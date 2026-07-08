@@ -55,7 +55,7 @@ export default function MainLayout() {
           <DescriptionOutlinedIcon sx={{ color: '#fff', fontSize: 20 }} />
         </Box>
         <Typography variant="h6" fontWeight={700} fontSize={18}>
-          VertragsHub
+          TestHub
         </Typography>
       </Toolbar>
       <List sx={{ px: 2, mt: 1 }}>
